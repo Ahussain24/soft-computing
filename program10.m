@@ -1,27 +1,29 @@
 
-X = [0 0;
-     0 1;
-     1 0;
-     1 1];
+patterns = [
+    1 1 1 0;
+    1 0 1 0;
+    0 1 0 1;
+    0 0 1 1
+];
 
-targets = [0; 0; 0; 1];
 
-w = rand(size(X, 2), 1);
+numPatterns = size(patterns, 1);
 
-lr = 0.1;
 
-for i = 1:size(X, 1)
-    y = X(i, :) * w;
-   
-    w = w + lr * X(i, :)' * (targets(i) - y);
+weights = zeros(size(patterns, 2));
+
+for i = 1:numPatterns
+    inputPattern = patterns(i, :);
+    weights = weights + (inputPattern' * inputPattern);
 end
 
-output = X * w;
 
-disp('Trained weights:');
-disp(w');
+newPattern = [1 1 0 0];
 
-disp('Outputs of the Hebbian neuron:');
-disp(output');
-disp('Target values:');
-disp(targets');
+disp('newPattern:');
+disp(newPattern);
+
+updatedPattern = sign(newPattern * weights);
+
+disp('updatedPattern:');
+disp(updatedPattern);
